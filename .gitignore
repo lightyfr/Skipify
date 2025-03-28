@@ -1,0 +1,54 @@
+# .NET Core build folders
+bin/
+obj/
+publish/
+
+# Visual Studio and VS Code files
+.vs/
+.vscode/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.dbmdl
+*.dbproj.schemaview
+*.pfx
+*.publishsettings
+orleans.codegen.cs
+
+# Debug logs
+*.log
+SpotifyAdSkipper_debug.log
+
+# Windows service files
+*.InstallLog
+*.InstallState
+
+# Rider files
+.idea/
+*.sln.iml
+
+# NuGet
+*.nupkg
+# The packages folder can be ignored because of Package Restore
+**/[Pp]ackages/*
+# except build/, which is used as an MSBuild target.
+!**/[Pp]ackages/build/
+
+# MSBuild Binary and Structured Log
+*.binlog
+
+# Local History for Visual Studio
+.localhistory/
+
+# Windows files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# User-specific files
+*.rsuser
+
+# JetBrains Rider
+.idea/
