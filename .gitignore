@@ -1,5 +1,6 @@
 # .NET Core build folders
 bin/
+bin/*
 obj/
 publish/
 
@@ -57,5 +58,6 @@ bin/
 obj/
 bin/Release/
 \bin
+bin\
 /bin
 .bin

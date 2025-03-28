@@ -258,15 +258,19 @@ namespace SpotifyAdSkipper
                 bool started = false;
                 
                 if (File.Exists(spotifyPath))
-                {
-                    Process.Start(new ProcessStartInfo
+              {
+                ProcessStartInfo psi = new ProcessStartInfo
                     {
                         FileName = spotifyPath,
-                        UseShellExecute = true
-                    });
-                    
-                    LogDebug("Spotify started successfully");
-                    started = true;
+                    UseShellExecute = false, // Prevents opening an interactive window
+                    CreateNoWindow = true,   // Ensures no new window appears
+                    WindowStyle = ProcessWindowStyle.Hidden // Starts minimized
+                };
+    
+           
+                Process.Start(psi);
+                started = true;
+                LogDebug("Spotify started in the background successfully");
                 }
                 
                 if (!started)

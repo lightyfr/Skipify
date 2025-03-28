@@ -276,3 +276,7 @@ C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\
 C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\obj\Release\net6.0\win-x64\SpotifyAdSkipper.sourcelink.json
 C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\publish\publish\publish\publish\appsettings.Development.json
 C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\publish\publish\publish\publish\appsettings.json
+C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\publish\publish\publish\publish\publish\appsettings.Development.json
+C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\publish\publish\publish\publish\publish\appsettings.json
+C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\publish\publish\publish\publish\publish\publish\appsettings.Development.json
+C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\publish\publish\publish\publish\publish\publish\appsettings.json
