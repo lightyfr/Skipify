@@ -68,7 +68,7 @@
           }
         }
       },
-      "Microsoft.Extensions.Configuration.EnvironmentVariables/6.0.0": {
+      "Microsoft.Extensions.Configuration.EnvironmentVariables/6.0.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.Configuration": "6.0.0",
@@ -125,7 +125,7 @@
           }
         }
       },
-      "Microsoft.Extensions.Configuration.UserSecrets/6.0.0": {
+      "Microsoft.Extensions.Configuration.UserSecrets/6.0.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.Configuration.Abstractions": "6.0.0",
@@ -144,7 +144,8 @@
           }
         },
         "build": {
-          "build/netstandard2.0/_._": {}
+          "buildTransitive/netstandard2.0/Microsoft.Extensions.Configuration.UserSecrets.props": {},
+          "buildTransitive/netstandard2.0/Microsoft.Extensions.Configuration.UserSecrets.targets": {}
         }
       },
       "Microsoft.Extensions.DependencyInjection/6.0.0": {
@@ -239,17 +240,17 @@
           "buildTransitive/netcoreapp3.1/_._": {}
         }
       },
-      "Microsoft.Extensions.Hosting/6.0.0": {
+      "Microsoft.Extensions.Hosting/6.0.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.Configuration": "6.0.0",
           "Microsoft.Extensions.Configuration.Abstractions": "6.0.0",
           "Microsoft.Extensions.Configuration.Binder": "6.0.0",
           "Microsoft.Extensions.Configuration.CommandLine": "6.0.0",
-          "Microsoft.Extensions.Configuration.EnvironmentVariables": "6.0.0",
+          "Microsoft.Extensions.Configuration.EnvironmentVariables": "6.0.1",
           "Microsoft.Extensions.Configuration.FileExtensions": "6.0.0",
           "Microsoft.Extensions.Configuration.Json": "6.0.0",
-          "Microsoft.Extensions.Configuration.UserSecrets": "6.0.0",
+          "Microsoft.Extensions.Configuration.UserSecrets": "6.0.1",
           "Microsoft.Extensions.DependencyInjection": "6.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
           "Microsoft.Extensions.FileProviders.Abstractions": "6.0.0",
@@ -296,10 +297,10 @@
           }
         }
       },
-      "Microsoft.Extensions.Hosting.WindowsServices/6.0.0": {
+      "Microsoft.Extensions.Hosting.WindowsServices/6.0.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Hosting": "6.0.0",
+          "Microsoft.Extensions.Hosting": "6.0.1",
           "Microsoft.Extensions.Logging.EventLog": "6.0.0",
           "System.ServiceProcess.ServiceController": "6.0.0"
         },
@@ -526,35 +527,6 @@
         "type": "package",
         "build": {
           "build/Microsoft.NET.ILLink.Tasks.props": {}
-        }
-      },
-      "Newtonsoft.Json/13.0.1": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {
-            "related": ".xml"
-          }
-        }
-      },
-      "SpotifyAPI.Web/7.0.0": {
-        "type": "package",
-        "dependencies": {
-          "Newtonsoft.Json": "13.0.1"
-        },
-        "compile": {
-          "lib/net6.0/SpotifyAPI.Web.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net6.0/SpotifyAPI.Web.dll": {
-            "related": ".xml"
-          }
         }
       },
       "System.Diagnostics.DiagnosticSource/6.0.0": {
@@ -756,7 +728,7 @@
           }
         }
       },
-      "Microsoft.Extensions.Configuration.EnvironmentVariables/6.0.0": {
+      "Microsoft.Extensions.Configuration.EnvironmentVariables/6.0.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.Configuration": "6.0.0",
@@ -813,7 +785,7 @@
           }
         }
       },
-      "Microsoft.Extensions.Configuration.UserSecrets/6.0.0": {
+      "Microsoft.Extensions.Configuration.UserSecrets/6.0.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.Configuration.Abstractions": "6.0.0",
@@ -832,7 +804,8 @@
           }
         },
         "build": {
-          "build/netstandard2.0/_._": {}
+          "buildTransitive/netstandard2.0/Microsoft.Extensions.Configuration.UserSecrets.props": {},
+          "buildTransitive/netstandard2.0/Microsoft.Extensions.Configuration.UserSecrets.targets": {}
         }
       },
       "Microsoft.Extensions.DependencyInjection/6.0.0": {
@@ -927,17 +900,17 @@
           "buildTransitive/netcoreapp3.1/_._": {}
         }
       },
-      "Microsoft.Extensions.Hosting/6.0.0": {
+      "Microsoft.Extensions.Hosting/6.0.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.Configuration": "6.0.0",
           "Microsoft.Extensions.Configuration.Abstractions": "6.0.0",
           "Microsoft.Extensions.Configuration.Binder": "6.0.0",
           "Microsoft.Extensions.Configuration.CommandLine": "6.0.0",
-          "Microsoft.Extensions.Configuration.EnvironmentVariables": "6.0.0",
+          "Microsoft.Extensions.Configuration.EnvironmentVariables": "6.0.1",
           "Microsoft.Extensions.Configuration.FileExtensions": "6.0.0",
           "Microsoft.Extensions.Configuration.Json": "6.0.0",
-          "Microsoft.Extensions.Configuration.UserSecrets": "6.0.0",
+          "Microsoft.Extensions.Configuration.UserSecrets": "6.0.1",
           "Microsoft.Extensions.DependencyInjection": "6.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
           "Microsoft.Extensions.FileProviders.Abstractions": "6.0.0",
@@ -984,10 +957,10 @@
           }
         }
       },
-      "Microsoft.Extensions.Hosting.WindowsServices/6.0.0": {
+      "Microsoft.Extensions.Hosting.WindowsServices/6.0.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Hosting": "6.0.0",
+          "Microsoft.Extensions.Hosting": "6.0.1",
           "Microsoft.Extensions.Logging.EventLog": "6.0.0",
           "System.ServiceProcess.ServiceController": "6.0.0"
         },
@@ -1216,35 +1189,6 @@
           "build/Microsoft.NET.ILLink.Tasks.props": {}
         }
       },
-      "Newtonsoft.Json/13.0.1": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {
-            "related": ".xml"
-          }
-        }
-      },
-      "SpotifyAPI.Web/7.0.0": {
-        "type": "package",
-        "dependencies": {
-          "Newtonsoft.Json": "13.0.1"
-        },
-        "compile": {
-          "lib/net6.0/SpotifyAPI.Web.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net6.0/SpotifyAPI.Web.dll": {
-            "related": ".xml"
-          }
-        }
-      },
       "System.Diagnostics.DiagnosticSource/6.0.0": {
         "type": "package",
         "dependencies": {
@@ -1434,10 +1378,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Microsoft.Extensions.Configuration.EnvironmentVariables/6.0.0": {
-      "sha512": "DjYkzqvhiHCq38LW71PcIxXk6nhtV6VySP9yDcSO0goPl7YCU1VG1f2Wbgy58lkA10pWkjHCblZPUyboCB93ZA==",
+    "Microsoft.Extensions.Configuration.EnvironmentVariables/6.0.1": {
+      "sha512": "pnyXV1LFOsYjGveuC07xp0YHIyGq7jRq5Ncb5zrrIieMLWVwgMyYxcOH0jTnBedDT4Gh1QinSqsjqzcieHk1og==",
       "type": "package",
-      "path": "microsoft.extensions.configuration.environmentvariables/6.0.0",
+      "path": "microsoft.extensions.configuration.environmentvariables/6.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1448,7 +1392,7 @@
         "lib/net461/Microsoft.Extensions.Configuration.EnvironmentVariables.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Configuration.EnvironmentVariables.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Configuration.EnvironmentVariables.xml",
-        "microsoft.extensions.configuration.environmentvariables.6.0.0.nupkg.sha512",
+        "microsoft.extensions.configuration.environmentvariables.6.0.1.nupkg.sha512",
         "microsoft.extensions.configuration.environmentvariables.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -1493,23 +1437,23 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Microsoft.Extensions.Configuration.UserSecrets/6.0.0": {
-      "sha512": "lB0Hb2V4+RUHy+LjEcqEr4EcV4RWc9EnjAV2GdtWQEdljQX+R4hGREftI7sInU9okP93pDrJiaj6QUJ6ZsslOA==",
+    "Microsoft.Extensions.Configuration.UserSecrets/6.0.1": {
+      "sha512": "Fy8yr4V6obi7ZxvKYI1i85jqtwMq8tqyxQVZpRSkgeA8enqy/KvBIMdcuNdznlxQMZa72mvbHqb7vbg4Pyx95w==",
       "type": "package",
-      "path": "microsoft.extensions.configuration.usersecrets/6.0.0",
+      "path": "microsoft.extensions.configuration.usersecrets/6.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
-        "build/netstandard2.0/Microsoft.Extensions.Configuration.UserSecrets.props",
-        "build/netstandard2.0/Microsoft.Extensions.Configuration.UserSecrets.targets",
+        "buildTransitive/netstandard2.0/Microsoft.Extensions.Configuration.UserSecrets.props",
+        "buildTransitive/netstandard2.0/Microsoft.Extensions.Configuration.UserSecrets.targets",
         "lib/net461/Microsoft.Extensions.Configuration.UserSecrets.dll",
         "lib/net461/Microsoft.Extensions.Configuration.UserSecrets.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Configuration.UserSecrets.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Configuration.UserSecrets.xml",
-        "microsoft.extensions.configuration.usersecrets.6.0.0.nupkg.sha512",
+        "microsoft.extensions.configuration.usersecrets.6.0.1.nupkg.sha512",
         "microsoft.extensions.configuration.usersecrets.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -1633,10 +1577,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Microsoft.Extensions.Hosting/6.0.0": {
-      "sha512": "M8VzD0ni5VarIRT8njnwK4K2WSAo0kZH4Zc3mKcSGkP4CjDZ91T9ZEFmmwhmo4z7x8AFq+tW0WFi9wX+K2cxkQ==",
+    "Microsoft.Extensions.Hosting/6.0.1": {
+      "sha512": "hbmizc9KPWOacLU8Z8YMaBG6KWdZFppczYV/KwnPGU/8xebWxQxdDeJmLOgg968prb7g2oQgnp6JVLX6lgby8g==",
       "type": "package",
-      "path": "microsoft.extensions.hosting/6.0.0",
+      "path": "microsoft.extensions.hosting/6.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1653,7 +1597,7 @@
         "lib/netstandard2.0/Microsoft.Extensions.Hosting.xml",
         "lib/netstandard2.1/Microsoft.Extensions.Hosting.dll",
         "lib/netstandard2.1/Microsoft.Extensions.Hosting.xml",
-        "microsoft.extensions.hosting.6.0.0.nupkg.sha512",
+        "microsoft.extensions.hosting.6.0.1.nupkg.sha512",
         "microsoft.extensions.hosting.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -1679,10 +1623,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Microsoft.Extensions.Hosting.WindowsServices/6.0.0": {
-      "sha512": "qrYcNoYOI7AouQf0edY1NotePLNfz6wwLfjcEL5IQMXQm61k9glChzr7bt4I8uFelAHK8dYJPvCHEd6idxoXOw==",
+    "Microsoft.Extensions.Hosting.WindowsServices/6.0.1": {
+      "sha512": "0vaOeMeDpVUqvOJ0pHugoOqTZULdq7c0kZLzzlrQwUZ7ScUat27d8hrK3IxJ7FWF3OBZXSjA2nWYRcdA5WG9wg==",
       "type": "package",
-      "path": "microsoft.extensions.hosting.windowsservices/6.0.0",
+      "path": "microsoft.extensions.hosting.windowsservices/6.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1695,7 +1639,7 @@
         "lib/netstandard2.0/Microsoft.Extensions.Hosting.WindowsServices.xml",
         "lib/netstandard2.1/Microsoft.Extensions.Hosting.WindowsServices.dll",
         "lib/netstandard2.1/Microsoft.Extensions.Hosting.WindowsServices.xml",
-        "microsoft.extensions.hosting.windowsservices.6.0.0.nupkg.sha512",
+        "microsoft.extensions.hosting.windowsservices.6.0.1.nupkg.sha512",
         "microsoft.extensions.hosting.windowsservices.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -1992,52 +1936,6 @@
         "tools/net7.0/illink.runtimeconfig.json"
       ]
     },
-    "Newtonsoft.Json/13.0.1": {
-      "sha512": "ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A==",
-      "type": "package",
-      "path": "newtonsoft.json/13.0.1",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "LICENSE.md",
-        "lib/net20/Newtonsoft.Json.dll",
-        "lib/net20/Newtonsoft.Json.xml",
-        "lib/net35/Newtonsoft.Json.dll",
-        "lib/net35/Newtonsoft.Json.xml",
-        "lib/net40/Newtonsoft.Json.dll",
-        "lib/net40/Newtonsoft.Json.xml",
-        "lib/net45/Newtonsoft.Json.dll",
-        "lib/net45/Newtonsoft.Json.xml",
-        "lib/netstandard1.0/Newtonsoft.Json.dll",
-        "lib/netstandard1.0/Newtonsoft.Json.xml",
-        "lib/netstandard1.3/Newtonsoft.Json.dll",
-        "lib/netstandard1.3/Newtonsoft.Json.xml",
-        "lib/netstandard2.0/Newtonsoft.Json.dll",
-        "lib/netstandard2.0/Newtonsoft.Json.xml",
-        "newtonsoft.json.13.0.1.nupkg.sha512",
-        "newtonsoft.json.nuspec",
-        "packageIcon.png"
-      ]
-    },
-    "SpotifyAPI.Web/7.0.0": {
-      "sha512": "XZtF0OtzwytroHuHxMxdDtNv6Ybb9vV6TwvFei1oWch001ahTerbPckLGjx+h/LOEiX5Z+LuQ6Z1YXTaoA4BLw==",
-      "type": "package",
-      "path": "spotifyapi.web/7.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net5.0/SpotifyAPI.Web.dll",
-        "lib/net5.0/SpotifyAPI.Web.xml",
-        "lib/net6.0/SpotifyAPI.Web.dll",
-        "lib/net6.0/SpotifyAPI.Web.xml",
-        "lib/net7.0/SpotifyAPI.Web.dll",
-        "lib/net7.0/SpotifyAPI.Web.xml",
-        "lib/netstandard2.1/SpotifyAPI.Web.dll",
-        "lib/netstandard2.1/SpotifyAPI.Web.xml",
-        "spotifyapi.web.7.0.0.nupkg.sha512",
-        "spotifyapi.web.nuspec"
-      ]
-    },
     "System.Diagnostics.DiagnosticSource/6.0.0": {
       "sha512": "frQDfv0rl209cKm1lnwTgFPzNigy2EKk1BS3uAvHvlBVKe5cymGyHO+Sj+NLv5VF/AhHsqPIUUwya5oV4CHMUw==",
       "type": "package",
@@ -2236,11 +2134,10 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Microsoft.Extensions.Hosting >= 6.0.0",
-      "Microsoft.Extensions.Hosting.WindowsServices >= 6.0.0",
+      "Microsoft.Extensions.Hosting >= 6.0.1",
+      "Microsoft.Extensions.Hosting.WindowsServices >= 6.0.1",
       "Microsoft.NET.ILLink.Analyzers >= 7.0.100-1.23211.1",
-      "Microsoft.NET.ILLink.Tasks >= 7.0.100-1.23211.1",
-      "SpotifyAPI.Web >= 7.0.0"
+      "Microsoft.NET.ILLink.Tasks >= 7.0.100-1.23211.1"
     ]
   },
   "packageFolders": {
@@ -2295,11 +2192,11 @@
         "dependencies": {
           "Microsoft.Extensions.Hosting": {
             "target": "Package",
-            "version": "[6.0.0, )"
+            "version": "[6.0.1, )"
           },
           "Microsoft.Extensions.Hosting.WindowsServices": {
             "target": "Package",
-            "version": "[6.0.0, )"
+            "version": "[6.0.1, )"
           },
           "Microsoft.NET.ILLink.Analyzers": {
             "suppressParent": "All",
@@ -2312,10 +2209,6 @@
             "target": "Package",
             "version": "[7.0.100-1.23211.1, )",
             "autoReferenced": true
-          },
-          "SpotifyAPI.Web": {
-            "target": "Package",
-            "version": "[7.0.0, )"
           }
         },
         "imports": [

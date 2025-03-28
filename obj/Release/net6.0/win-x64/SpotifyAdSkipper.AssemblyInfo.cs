@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("dotnet-SpotifyAdSkipper-4f9b83bc-f31e-47b3-8ca4-16d5d4b98d89")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("SpotifyAdSkipper")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d0b0e33c68c615e9ffcd9d228834b3d43e4df08b")]
 [assembly: System.Reflection.AssemblyProductAttribute("SpotifyAdSkipper")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SpotifyAdSkipper")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

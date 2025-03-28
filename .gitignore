@@ -10,6 +10,7 @@ publish/
 *.userosscache
 *.suo
 *.userprefs
+*.dll
 *.dbmdl
 *.dbproj.schemaview
 *.pfx
@@ -52,3 +53,9 @@ $RECYCLE.BIN/
 
 # JetBrains Rider
 .idea/
+bin/
+obj/
+bin/Release/
+\bin
+/bin
+.bin

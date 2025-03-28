@@ -36,8 +36,6 @@ C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\
 C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\Microsoft.Extensions.Options.dll
 C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\Microsoft.Extensions.Options.ConfigurationExtensions.dll
 C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\Microsoft.Extensions.Primitives.dll
-C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\Newtonsoft.Json.dll
-C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\SpotifyAPI.Web.dll
 C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\System.Diagnostics.EventLog.Messages.dll
 C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\System.Diagnostics.EventLog.dll
 C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\System.ServiceProcess.ServiceController.dll
@@ -273,3 +271,8 @@ C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\
 C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\publish\appsettings.json
 C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\publish\publish\appsettings.Development.json
 C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\publish\publish\appsettings.json
+C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\publish\publish\publish\appsettings.Development.json
+C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\publish\publish\publish\appsettings.json
+C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\obj\Release\net6.0\win-x64\SpotifyAdSkipper.sourcelink.json
+C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\publish\publish\publish\publish\appsettings.Development.json
+C:\Users\Adhitya\Documents\VS Code Projects\SpotifyAdSkipper\bin\Release\net6.0\win-x64\publish\publish\publish\publish\appsettings.json

@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -17,16 +16,23 @@ namespace SpotifyAdSkipper
     {
         public static void Main(string[] args)
         {
-            // Create a log file for debugging
-            File.WriteAllText("C:\\SpotifyAdSkipper_debug.log", $"Service starting at {DateTime.Now}\n");
-            
             try
             {
+                // For debugging directly
+                if (args.Length > 0 && args[0] == "console")
+                {
+                    Console.WriteLine("Running in console mode");
+                    SpotifyMonitorService service = new SpotifyMonitorService(null);
+                    service.StartConsoleMode().GetAwaiter().GetResult();
+                    return;
+                }
+
+                // Run as a service
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)
             {
-                File.AppendAllText("C:\\SpotifyAdSkipper_debug.log", $"FATAL ERROR: {ex}\n");
+                File.WriteAllText("C:\\SpotifyAdSkipper_error.log", $"Startup error: {ex}");
             }
         }
 
@@ -45,37 +51,32 @@ namespace SpotifyAdSkipper
     public class SpotifyMonitorService : BackgroundService
     {
         private readonly ILogger<SpotifyMonitorService> _logger;
-        private int _checkIntervalMs = 1000; // Check every second
+        private int _checkIntervalMs = 1000;
         private bool _isRestarting = false;
         private const string SpotifyProcessName = "Spotify";
         private const string SpotifyExePath = @"C:\Users\{0}\AppData\Roaming\Spotify\Spotify.exe";
         private string _previousTitle = string.Empty;
         private DateTime _lastAdDetection = DateTime.MinValue;
-        
-        // Debug file path
         private string _debugLogPath = "C:\\SpotifyAdSkipper_debug.log";
 
-        // Win32 API imports for window title detection
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
-
+        // Win32 API imports
         [DllImport("user32.dll")]
         private static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern int GetWindowThreadProcessId(IntPtr handle, out int processId);
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
         [DllImport("user32.dll")]
-        private static extern bool EnumWindows(EnumWindowsProc enumProc, IntPtr lParam);
-
-        // Callback for EnumWindows
-        private delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
-
+        private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+        
         [DllImport("user32.dll")]
-        private static extern bool IsWindowVisible(IntPtr hWnd);
+        private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+        // Media key constants
+        private const byte VK_MEDIA_PLAY_PAUSE = 0xB3;
+        private const byte VK_MEDIA_NEXT_TRACK = 0xB0;
+        private const uint KEYEVENTF_EXTENDEDKEY = 0x0001;
+        private const uint KEYEVENTF_KEYUP = 0x0002;
 
         public SpotifyMonitorService(ILogger<SpotifyMonitorService> logger)
         {
@@ -87,13 +88,28 @@ namespace SpotifyAdSkipper
         {
             try
             {
-                File.AppendAllText(_debugLogPath, $"{DateTime.Now}: {message}\n");
-                _logger.LogInformation(message);
+                string logMessage = $"{DateTime.Now}: {message}";
+                File.AppendAllText(_debugLogPath, logMessage + Environment.NewLine);
+                _logger?.LogInformation(message);
             }
             catch
             {
-                // Ignore logging errors to prevent cascading failures
+                // Ignore logging errors
             }
+        }
+
+        public async Task StartConsoleMode()
+        {
+            Console.WriteLine("Spotify Ad Skipper running in console mode");
+            Console.WriteLine("Press Ctrl+C to exit");
+            
+            var tokenSource = new CancellationTokenSource();
+            Console.CancelKeyPress += (s, e) => {
+                e.Cancel = true;
+                tokenSource.Cancel();
+            };
+            
+            await ExecuteAsync(tokenSource.Token);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -108,13 +124,16 @@ namespace SpotifyAdSkipper
                     {
                         if (IsSpotifyRunning() && !_isRestarting)
                         {
-                            // Get all Spotify window titles
-                            var spotifyWindows = GetSpotifyWindowTitles();
+                            // Get the main Spotify process
+                            var spotifyProcesses = Process.GetProcessesByName(SpotifyProcessName);
                             
-                            if (spotifyWindows.Count > 0)
+                            foreach (var process in spotifyProcesses)
                             {
-                                foreach (var title in spotifyWindows)
+                                if (process.MainWindowHandle != IntPtr.Zero)
                                 {
+                                    // Get the window title
+                                    string title = GetWindowTitle(process.MainWindowHandle);
+                                    
                                     // Only log if title changed
                                     if (title != _previousTitle)
                                     {
@@ -140,22 +159,6 @@ namespace SpotifyAdSkipper
                                     }
                                 }
                             }
-                            else
-                            {
-                                // Only log occasionally to reduce spam
-                                if (DateTime.Now.Second % 30 == 0)
-                                {
-                                    LogDebug("Spotify is running but no windows found");
-                                }
-                            }
-                        }
-                        else if (!IsSpotifyRunning())
-                        {
-                            // Only log occasionally to reduce spam
-                            if (DateTime.Now.Second % 30 == 0)
-                            {
-                                LogDebug("Spotify is not running");
-                            }
                         }
                     }
                     catch (Exception ex)
@@ -168,46 +171,18 @@ namespace SpotifyAdSkipper
             }
             catch (Exception ex)
             {
-                LogDebug($"FATAL ERROR: {ex}");
+                LogDebug($"Fatal error: {ex}");
             }
         }
 
-        private List<string> GetSpotifyWindowTitles()
+        private string GetWindowTitle(IntPtr windowHandle)
         {
-            var titles = new List<string>();
-            
-            EnumWindows((hWnd, lParam) =>
+            StringBuilder sb = new StringBuilder(256);
+            if (GetWindowText(windowHandle, sb, 256) > 0)
             {
-                int processId;
-                GetWindowThreadProcessId(hWnd, out processId);
-                
-                try
-                {
-                    Process process = Process.GetProcessById(processId);
-                    
-                    if (process.ProcessName.Equals(SpotifyProcessName, StringComparison.OrdinalIgnoreCase) && IsWindowVisible(hWnd))
-                    {
-                        StringBuilder sb = new StringBuilder(256);
-                        
-                        if (GetWindowText(hWnd, sb, 256) > 0)
-                        {
-                            string title = sb.ToString().Trim();
-                            if (!string.IsNullOrEmpty(title))
-                            {
-                                titles.Add(title);
-                            }
-                        }
-                    }
-                }
-                catch
-                {
-                    // Process might have exited, ignore
-                }
-                
-                return true; // Continue enumeration
-            }, IntPtr.Zero);
-            
-            return titles;
+                return sb.ToString().Trim();
+            }
+            return string.Empty;
         }
 
         private bool IsAdvertisement(string title)
@@ -246,8 +221,15 @@ namespace SpotifyAdSkipper
 
         private bool IsSpotifyRunning()
         {
-            var isRunning = Process.GetProcessesByName(SpotifyProcessName).Length > 0;
-            return isRunning;
+            try
+            {
+                var isRunning = Process.GetProcessesByName(SpotifyProcessName).Length > 0;
+                return isRunning;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private async Task RestartSpotify()
@@ -273,6 +255,8 @@ namespace SpotifyAdSkipper
                 string spotifyPath = string.Format(SpotifyExePath, username);
                 
                 LogDebug($"Starting Spotify from: {spotifyPath}");
+                bool started = false;
+                
                 if (File.Exists(spotifyPath))
                 {
                     Process.Start(new ProcessStartInfo
@@ -282,11 +266,11 @@ namespace SpotifyAdSkipper
                     });
                     
                     LogDebug("Spotify started successfully");
+                    started = true;
                 }
-                else
+                
+                if (!started)
                 {
-                    LogDebug($"ERROR: Spotify executable not found at {spotifyPath}");
-                    
                     // Try alternative locations
                     string[] altPaths = {
                         @"C:\Program Files\WindowsApps\SpotifyAB.SpotifyMusic_1.225.922.0_x86__zpdnekdrzrea0\Spotify.exe",
@@ -305,17 +289,56 @@ namespace SpotifyAdSkipper
                             });
                             
                             LogDebug("Spotify started from alternative path");
+                            started = true;
                             break;
+                        }
+                    }
+                    
+                    if (!started)
+                    {
+                        // Last resort - try the shell command
+                        try 
+                        {
+                            Process.Start(new ProcessStartInfo
+                            {
+                                FileName = "spotify",
+                                UseShellExecute = true
+                            });
+                            LogDebug("Spotify started via shell command");
+                            started = true;
+                        }
+                        catch (Exception ex)
+                        {
+                            LogDebug($"Failed to start via shell: {ex.Message}");
                         }
                     }
                 }
                 
-                // Wait for Spotify to start up before monitoring again
+                // Wait for Spotify to start up
+                LogDebug("Waiting for Spotify to start");
                 await Task.Delay(5000);
+                
+                // Resume playback with media keys
+                if (started)
+                {
+                    LogDebug("Sending media play command");
+                    // Press and release the Play/Pause media key
+                    keybd_event(VK_MEDIA_PLAY_PAUSE, 0, KEYEVENTF_EXTENDEDKEY, UIntPtr.Zero);
+                    keybd_event(VK_MEDIA_PLAY_PAUSE, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, UIntPtr.Zero);
+                    
+                    // Try to hide Spotify window if it appears
+                    IntPtr spotifyWindow = FindWindow(null, "Spotify");
+                    if (spotifyWindow != IntPtr.Zero)
+                    {
+                        // SW_MINIMIZE = 6
+                        ShowWindow(spotifyWindow, 6);
+                        LogDebug("Minimized Spotify window");
+                    }
+                }
             }
             catch (Exception ex)
             {
-                LogDebug($"Failed to restart Spotify: {ex}");
+                LogDebug($"Failed to restart Spotify: {ex.Message}");
             }
             finally
             {

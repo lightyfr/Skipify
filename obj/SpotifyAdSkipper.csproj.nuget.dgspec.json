@@ -52,11 +52,11 @@
           "dependencies": {
             "Microsoft.Extensions.Hosting": {
               "target": "Package",
-              "version": "[6.0.0, )"
+              "version": "[6.0.1, )"
             },
             "Microsoft.Extensions.Hosting.WindowsServices": {
               "target": "Package",
-              "version": "[6.0.0, )"
+              "version": "[6.0.1, )"
             },
             "Microsoft.NET.ILLink.Analyzers": {
               "suppressParent": "All",
@@ -69,10 +69,6 @@
               "target": "Package",
               "version": "[7.0.100-1.23211.1, )",
               "autoReferenced": true
-            },
-            "SpotifyAPI.Web": {
-              "target": "Package",
-              "version": "[7.0.0, )"
             }
           },
           "imports": [

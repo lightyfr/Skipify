@@ -9,11 +9,10 @@
     ".NETCoreApp,Version=v6.0/win-x64": {
       "SpotifyAdSkipper/1.0.0": {
         "dependencies": {
-          "Microsoft.Extensions.Hosting": "6.0.0",
-          "Microsoft.Extensions.Hosting.WindowsServices": "6.0.0",
+          "Microsoft.Extensions.Hosting": "6.0.1",
+          "Microsoft.Extensions.Hosting.WindowsServices": "6.0.1",
           "Microsoft.NET.ILLink.Analyzers": "7.0.100-1.23211.1",
           "Microsoft.NET.ILLink.Tasks": "7.0.100-1.23211.1",
-          "SpotifyAPI.Web": "7.0.0",
           "runtimepack.Microsoft.NETCore.App.Runtime.win-x64": "6.0.36"
         },
         "runtime": {
@@ -730,7 +729,7 @@
           }
         }
       },
-      "Microsoft.Extensions.Configuration.EnvironmentVariables/6.0.0": {
+      "Microsoft.Extensions.Configuration.EnvironmentVariables/6.0.1": {
         "dependencies": {
           "Microsoft.Extensions.Configuration": "6.0.0",
           "Microsoft.Extensions.Configuration.Abstractions": "6.0.0"
@@ -738,7 +737,7 @@
         "runtime": {
           "lib/netstandard2.0/Microsoft.Extensions.Configuration.EnvironmentVariables.dll": {
             "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.21.52210"
+            "fileVersion": "6.0.222.6406"
           }
         }
       },
@@ -772,7 +771,7 @@
           }
         }
       },
-      "Microsoft.Extensions.Configuration.UserSecrets/6.0.0": {
+      "Microsoft.Extensions.Configuration.UserSecrets/6.0.1": {
         "dependencies": {
           "Microsoft.Extensions.Configuration.Abstractions": "6.0.0",
           "Microsoft.Extensions.Configuration.Json": "6.0.0",
@@ -782,7 +781,7 @@
         "runtime": {
           "lib/netstandard2.0/Microsoft.Extensions.Configuration.UserSecrets.dll": {
             "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.21.52210"
+            "fileVersion": "6.0.222.6406"
           }
         }
       },
@@ -838,16 +837,16 @@
           }
         }
       },
-      "Microsoft.Extensions.Hosting/6.0.0": {
+      "Microsoft.Extensions.Hosting/6.0.1": {
         "dependencies": {
           "Microsoft.Extensions.Configuration": "6.0.0",
           "Microsoft.Extensions.Configuration.Abstractions": "6.0.0",
           "Microsoft.Extensions.Configuration.Binder": "6.0.0",
           "Microsoft.Extensions.Configuration.CommandLine": "6.0.0",
-          "Microsoft.Extensions.Configuration.EnvironmentVariables": "6.0.0",
+          "Microsoft.Extensions.Configuration.EnvironmentVariables": "6.0.1",
           "Microsoft.Extensions.Configuration.FileExtensions": "6.0.0",
           "Microsoft.Extensions.Configuration.Json": "6.0.0",
-          "Microsoft.Extensions.Configuration.UserSecrets": "6.0.0",
+          "Microsoft.Extensions.Configuration.UserSecrets": "6.0.1",
           "Microsoft.Extensions.DependencyInjection": "6.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
           "Microsoft.Extensions.FileProviders.Abstractions": "6.0.0",
@@ -865,7 +864,7 @@
         "runtime": {
           "lib/net6.0/Microsoft.Extensions.Hosting.dll": {
             "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.21.52210"
+            "fileVersion": "6.0.222.6406"
           }
         }
       },
@@ -882,16 +881,16 @@
           }
         }
       },
-      "Microsoft.Extensions.Hosting.WindowsServices/6.0.0": {
+      "Microsoft.Extensions.Hosting.WindowsServices/6.0.1": {
         "dependencies": {
-          "Microsoft.Extensions.Hosting": "6.0.0",
+          "Microsoft.Extensions.Hosting": "6.0.1",
           "Microsoft.Extensions.Logging.EventLog": "6.0.0",
           "System.ServiceProcess.ServiceController": "6.0.0"
         },
         "runtime": {
           "lib/netstandard2.1/Microsoft.Extensions.Hosting.WindowsServices.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.21.52210"
+            "assemblyVersion": "6.0.0.1",
+            "fileVersion": "6.0.1022.47605"
           }
         }
       },
@@ -1037,25 +1036,6 @@
       },
       "Microsoft.NET.ILLink.Analyzers/7.0.100-1.23211.1": {},
       "Microsoft.NET.ILLink.Tasks/7.0.100-1.23211.1": {},
-      "Newtonsoft.Json/13.0.1": {
-        "runtime": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {
-            "assemblyVersion": "13.0.0.0",
-            "fileVersion": "13.0.1.25517"
-          }
-        }
-      },
-      "SpotifyAPI.Web/7.0.0": {
-        "dependencies": {
-          "Newtonsoft.Json": "13.0.1"
-        },
-        "runtime": {
-          "lib/net6.0/SpotifyAPI.Web.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
-      },
       "System.Diagnostics.DiagnosticSource/6.0.0": {
         "dependencies": {
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
@@ -1137,12 +1117,12 @@
       "path": "microsoft.extensions.configuration.commandline/6.0.0",
       "hashPath": "microsoft.extensions.configuration.commandline.6.0.0.nupkg.sha512"
     },
-    "Microsoft.Extensions.Configuration.EnvironmentVariables/6.0.0": {
+    "Microsoft.Extensions.Configuration.EnvironmentVariables/6.0.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-DjYkzqvhiHCq38LW71PcIxXk6nhtV6VySP9yDcSO0goPl7YCU1VG1f2Wbgy58lkA10pWkjHCblZPUyboCB93ZA==",
-      "path": "microsoft.extensions.configuration.environmentvariables/6.0.0",
-      "hashPath": "microsoft.extensions.configuration.environmentvariables.6.0.0.nupkg.sha512"
+      "sha512": "sha512-pnyXV1LFOsYjGveuC07xp0YHIyGq7jRq5Ncb5zrrIieMLWVwgMyYxcOH0jTnBedDT4Gh1QinSqsjqzcieHk1og==",
+      "path": "microsoft.extensions.configuration.environmentvariables/6.0.1",
+      "hashPath": "microsoft.extensions.configuration.environmentvariables.6.0.1.nupkg.sha512"
     },
     "Microsoft.Extensions.Configuration.FileExtensions/6.0.0": {
       "type": "package",
@@ -1158,12 +1138,12 @@
       "path": "microsoft.extensions.configuration.json/6.0.0",
       "hashPath": "microsoft.extensions.configuration.json.6.0.0.nupkg.sha512"
     },
-    "Microsoft.Extensions.Configuration.UserSecrets/6.0.0": {
+    "Microsoft.Extensions.Configuration.UserSecrets/6.0.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-lB0Hb2V4+RUHy+LjEcqEr4EcV4RWc9EnjAV2GdtWQEdljQX+R4hGREftI7sInU9okP93pDrJiaj6QUJ6ZsslOA==",
-      "path": "microsoft.extensions.configuration.usersecrets/6.0.0",
-      "hashPath": "microsoft.extensions.configuration.usersecrets.6.0.0.nupkg.sha512"
+      "sha512": "sha512-Fy8yr4V6obi7ZxvKYI1i85jqtwMq8tqyxQVZpRSkgeA8enqy/KvBIMdcuNdznlxQMZa72mvbHqb7vbg4Pyx95w==",
+      "path": "microsoft.extensions.configuration.usersecrets/6.0.1",
+      "hashPath": "microsoft.extensions.configuration.usersecrets.6.0.1.nupkg.sha512"
     },
     "Microsoft.Extensions.DependencyInjection/6.0.0": {
       "type": "package",
@@ -1200,12 +1180,12 @@
       "path": "microsoft.extensions.filesystemglobbing/6.0.0",
       "hashPath": "microsoft.extensions.filesystemglobbing.6.0.0.nupkg.sha512"
     },
-    "Microsoft.Extensions.Hosting/6.0.0": {
+    "Microsoft.Extensions.Hosting/6.0.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-M8VzD0ni5VarIRT8njnwK4K2WSAo0kZH4Zc3mKcSGkP4CjDZ91T9ZEFmmwhmo4z7x8AFq+tW0WFi9wX+K2cxkQ==",
-      "path": "microsoft.extensions.hosting/6.0.0",
-      "hashPath": "microsoft.extensions.hosting.6.0.0.nupkg.sha512"
+      "sha512": "sha512-hbmizc9KPWOacLU8Z8YMaBG6KWdZFppczYV/KwnPGU/8xebWxQxdDeJmLOgg968prb7g2oQgnp6JVLX6lgby8g==",
+      "path": "microsoft.extensions.hosting/6.0.1",
+      "hashPath": "microsoft.extensions.hosting.6.0.1.nupkg.sha512"
     },
     "Microsoft.Extensions.Hosting.Abstractions/6.0.0": {
       "type": "package",
@@ -1214,12 +1194,12 @@
       "path": "microsoft.extensions.hosting.abstractions/6.0.0",
       "hashPath": "microsoft.extensions.hosting.abstractions.6.0.0.nupkg.sha512"
     },
-    "Microsoft.Extensions.Hosting.WindowsServices/6.0.0": {
+    "Microsoft.Extensions.Hosting.WindowsServices/6.0.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-qrYcNoYOI7AouQf0edY1NotePLNfz6wwLfjcEL5IQMXQm61k9glChzr7bt4I8uFelAHK8dYJPvCHEd6idxoXOw==",
-      "path": "microsoft.extensions.hosting.windowsservices/6.0.0",
-      "hashPath": "microsoft.extensions.hosting.windowsservices.6.0.0.nupkg.sha512"
+      "sha512": "sha512-0vaOeMeDpVUqvOJ0pHugoOqTZULdq7c0kZLzzlrQwUZ7ScUat27d8hrK3IxJ7FWF3OBZXSjA2nWYRcdA5WG9wg==",
+      "path": "microsoft.extensions.hosting.windowsservices/6.0.1",
+      "hashPath": "microsoft.extensions.hosting.windowsservices.6.0.1.nupkg.sha512"
     },
     "Microsoft.Extensions.Logging/6.0.0": {
       "type": "package",
@@ -1304,20 +1284,6 @@
       "sha512": "sha512-tvG8XZYLjT0o3WicCyKBZysVWo1jC9HdCFmNRmddx3WbAz0UCsd0qKZqpiEo99VLA8Re+FzWK51OcRldQPbt2Q==",
       "path": "microsoft.net.illink.tasks/7.0.100-1.23211.1",
       "hashPath": "microsoft.net.illink.tasks.7.0.100-1.23211.1.nupkg.sha512"
-    },
-    "Newtonsoft.Json/13.0.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A==",
-      "path": "newtonsoft.json/13.0.1",
-      "hashPath": "newtonsoft.json.13.0.1.nupkg.sha512"
-    },
-    "SpotifyAPI.Web/7.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-XZtF0OtzwytroHuHxMxdDtNv6Ybb9vV6TwvFei1oWch001ahTerbPckLGjx+h/LOEiX5Z+LuQ6Z1YXTaoA4BLw==",
-      "path": "spotifyapi.web/7.0.0",
-      "hashPath": "spotifyapi.web.7.0.0.nupkg.sha512"
     },
     "System.Diagnostics.DiagnosticSource/6.0.0": {
       "type": "package",
