@@ -56,6 +56,7 @@ namespace SpotifyAdSkipper
         private const string SpotifyProcessName = "Spotify";
         private const string SpotifyExePath = @"C:\Users\{0}\AppData\Roaming\Spotify\Spotify.exe";
         private string _previousTitle = string.Empty;
+        private string _lastSongBeforeRestart = string.Empty;
         private DateTime _lastAdDetection = DateTime.MinValue;
         private string _debugLogPath = "C:\\SpotifyAdSkipper_debug.log";
 
@@ -149,6 +150,11 @@ namespace SpotifyAdSkipper
                                         {
                                             LogDebug($"Advertisement detected in title: '{title}'");
                                             _lastAdDetection = DateTime.Now;
+                                            
+                                            // Store the last recognized song title before restart
+                                            _lastSongBeforeRestart = _previousTitle;
+                                            LogDebug($"Storing last song title before restart: '{_lastSongBeforeRestart}'");
+                                            
                                             await RestartSpotify();
                                             break;
                                         }
@@ -232,6 +238,55 @@ namespace SpotifyAdSkipper
             }
         }
 
+        private async Task CheckAndSkipTrackIfNeeded()
+        {
+            try
+            {
+                // Get Spotify processes
+                var spotifyProcesses = Process.GetProcessesByName(SpotifyProcessName);
+                string currentTitle = string.Empty;
+                
+                // Get the current title from any Spotify window
+                foreach (var process in spotifyProcesses)
+                {
+                    if (process.MainWindowHandle != IntPtr.Zero)
+                    {
+                        currentTitle = GetWindowTitle(process.MainWindowHandle);
+                        if (!string.IsNullOrEmpty(currentTitle))
+                        {
+                            break;
+                        }
+                    }
+                }
+                
+                LogDebug($"After restart title check: '{currentTitle}'");
+                LogDebug($"Last song before restart: '{_lastSongBeforeRestart}'");
+                
+                // If the current song matches the one before restart, skip to next track
+                if (!string.IsNullOrEmpty(currentTitle) && 
+                    !string.IsNullOrEmpty(_lastSongBeforeRestart) && 
+                    currentTitle == _lastSongBeforeRestart && 
+                    !IsAdvertisement(currentTitle))
+                {
+                    LogDebug("Same song detected after restart - skipping to next track");
+                    
+                    // Press and release the Next Track media key
+                    keybd_event(VK_MEDIA_NEXT_TRACK, 0, KEYEVENTF_EXTENDEDKEY, UIntPtr.Zero);
+                    keybd_event(VK_MEDIA_NEXT_TRACK, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, UIntPtr.Zero);
+                    
+                    LogDebug("Skipped to next track");
+                }
+                else
+                {
+                    LogDebug("Song after restart is different or an ad - no need to skip");
+                }
+            }
+            catch (Exception ex)
+            {
+                LogDebug($"Error checking or skipping track: {ex.Message}");
+            }
+        }
+        
         private async Task RestartSpotify()
         {
             try
@@ -259,17 +314,25 @@ namespace SpotifyAdSkipper
                 
                 if (File.Exists(spotifyPath))
                 {
-                    // Create process start info with proper background settings
+                    // Create process start info with improved background settings
                     ProcessStartInfo psi = new ProcessStartInfo
                     {
                         FileName = spotifyPath,
-                        UseShellExecute = true,            // Use shell execution which is required for proper window style 
-                        WindowStyle = ProcessWindowStyle.Minimized  // Start minimized
+                        UseShellExecute = true,            // Required for window styling
+                        CreateNoWindow = false,            // Must be false when UseShellExecute is true
+                        WindowStyle = ProcessWindowStyle.Hidden  // Try Hidden instead of Minimized
                     };
                     
-                    Process.Start(psi);
+                    var proc = Process.Start(psi);
                     started = true;
-                    LogDebug("Spotify started in minimized mode successfully");
+                    LogDebug("Spotify process started with hidden window style");
+                    
+                    // Store the process ID to find and hide its window later
+                    int spotifyPid = proc?.Id ?? -1;
+                    if (spotifyPid > 0)
+                    {
+                        LogDebug($"Started Spotify with PID: {spotifyPid}");
+                    }
                 }
                 
                 if (!started)
@@ -289,10 +352,10 @@ namespace SpotifyAdSkipper
                             {
                                 FileName = path,
                                 UseShellExecute = true,
-                                WindowStyle = ProcessWindowStyle.Minimized
+                                WindowStyle = ProcessWindowStyle.Hidden
                             };
                             
-                            Process.Start(psi);
+                            var proc = Process.Start(psi);
                             LogDebug("Spotify started from alternative path in minimized mode");
                             started = true;
                             break;
@@ -308,10 +371,10 @@ namespace SpotifyAdSkipper
                             {
                                 FileName = "spotify",
                                 UseShellExecute = true,
-                                WindowStyle = ProcessWindowStyle.Minimized
+                                WindowStyle = ProcessWindowStyle.Hidden
                             };
                             
-                            Process.Start(psi);
+                            var proc = Process.Start(psi);
                             LogDebug("Spotify started via shell command in minimized mode");
                             started = true;
                         }
@@ -322,9 +385,37 @@ namespace SpotifyAdSkipper
                     }
                 }
                 
-                // Wait for Spotify to start up
-                LogDebug("Waiting for Spotify to start");
-                await Task.Delay(5000);
+                // More aggressive window hiding approach
+                LogDebug("Waiting for Spotify to initialize");
+                await Task.Delay(1000); // Shorter initial wait
+                
+                // Try to immediately hide any Spotify windows as soon as they appear
+                // SW_HIDE = 0, SW_MINIMIZE = 6
+                for (int attempt = 0; attempt < 10; attempt++)
+                {
+                    // Try to hide by window name
+                    IntPtr spotifyWindow = FindWindow(null, "Spotify");
+                    if (spotifyWindow != IntPtr.Zero)
+                    {
+                        ShowWindow(spotifyWindow, 0); // Use SW_HIDE (0) instead of minimize
+                        LogDebug($"Hidden Spotify window on attempt {attempt+1}");
+                    }
+                    
+                    // Try to hide by process main window
+                    foreach (var process in Process.GetProcessesByName(SpotifyProcessName))
+                    {
+                        if (process.MainWindowHandle != IntPtr.Zero)
+                        {
+                            ShowWindow(process.MainWindowHandle, 0); // Use SW_HIDE (0)
+                            LogDebug($"Hidden Spotify window handle {process.MainWindowHandle}");
+                        }
+                    }
+                    
+                    await Task.Delay(500); // Check every half second
+                }
+                
+                // Continue with regular startup sequence
+                await Task.Delay(3000); // Still give it time to fully initialize
                 
                 // Resume playback with media keys
                 if (started)
@@ -334,23 +425,26 @@ namespace SpotifyAdSkipper
                     keybd_event(VK_MEDIA_PLAY_PAUSE, 0, KEYEVENTF_EXTENDEDKEY, UIntPtr.Zero);
                     keybd_event(VK_MEDIA_PLAY_PAUSE, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, UIntPtr.Zero);
                     
-                    // Try to hide Spotify window if it appears
+                    // Final check to hide any windows that might have appeared
                     IntPtr spotifyWindow = FindWindow(null, "Spotify");
                     if (spotifyWindow != IntPtr.Zero)
                     {
-                        // SW_MINIMIZE = 6
-                        ShowWindow(spotifyWindow, 6);
-                        LogDebug("Minimized Spotify window");
+                        ShowWindow(spotifyWindow, 0); // SW_HIDE = 0
+                        LogDebug("Hidden Spotify window after playback started");
                     }
                     
-                    // Also look for any window with "Spotify" in the title
-                    await Task.Delay(1000); // Short delay to allow window to appear
+                    // Wait a moment for the track to start and the title to update
+                    await Task.Delay(2000);
+                    
+                    // Check if we need to skip to the next track
+                    await CheckAndSkipTrackIfNeeded();
+                    
                     foreach (var process in Process.GetProcessesByName(SpotifyProcessName))
                     {
                         if (process.MainWindowHandle != IntPtr.Zero)
                         {
-                            ShowWindow(process.MainWindowHandle, 6); // SW_MINIMIZE = 6
-                            LogDebug($"Minimized Spotify window with handle {process.MainWindowHandle}");
+                            ShowWindow(process.MainWindowHandle, 0); // SW_HIDE = 0
+                            LogDebug($"Hidden Spotify window handle {process.MainWindowHandle} after playback");
                         }
                     }
                 }
