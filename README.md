@@ -1,4 +1,4 @@
-# Spotify Ad Skipper
+# Skipify - Spotify Ad Skipper
 
 A lightweight Windows service that automatically detects and skips Spotify advertisements by monitoring window titles and restarting the Spotify client when an ad is detected.
 
