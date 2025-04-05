@@ -10,6 +10,16 @@
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <SelfContained>true</SelfContained>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    
+    <!-- Icon and application metadata -->
+    <ApplicationIcon>skipify.ico</ApplicationIcon>
+    <AssemblyName>Skipify</AssemblyName>
+    <Product>Skipify</Product>
+    <Description>Automatically skips Spotify advertisements by monitoring window titles for educational purposes</Description>
+    <Version>1.0.0</Version>
+    <Authors>Adhitya Nadooli</Authors>
+    <Company>Skipify</Company>
+    <Copyright>Copyright © 2025</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
