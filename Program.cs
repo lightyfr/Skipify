@@ -258,24 +258,23 @@ namespace SpotifyAdSkipper
                 bool started = false;
                 
                 if (File.Exists(spotifyPath))
-              {
-                ProcessStartInfo psi = new ProcessStartInfo
+                {
+                    // Create process start info with proper background settings
+                    ProcessStartInfo psi = new ProcessStartInfo
                     {
                         FileName = spotifyPath,
-                    UseShellExecute = false, // Prevents opening an interactive window
-                    CreateNoWindow = true,   // Ensures no new window appears
-                    WindowStyle = ProcessWindowStyle.Hidden // Starts minimized
-                };
-    
-           
-                Process.Start(psi);
-                started = true;
-                LogDebug("Spotify started in the background successfully");
+                        UseShellExecute = true,            // Use shell execution which is required for proper window style 
+                        WindowStyle = ProcessWindowStyle.Minimized  // Start minimized
+                    };
+                    
+                    Process.Start(psi);
+                    started = true;
+                    LogDebug("Spotify started in minimized mode successfully");
                 }
                 
                 if (!started)
                 {
-                    // Try alternative locations
+                    // Try alternative locations with consistent background launch settings
                     string[] altPaths = {
                         @"C:\Program Files\WindowsApps\SpotifyAB.SpotifyMusic_1.225.922.0_x86__zpdnekdrzrea0\Spotify.exe",
                         @"C:\Program Files (x86)\Spotify\Spotify.exe"
@@ -286,13 +285,15 @@ namespace SpotifyAdSkipper
                         if (File.Exists(path))
                         {
                             LogDebug($"Found alternative Spotify path: {path}");
-                            Process.Start(new ProcessStartInfo
+                            ProcessStartInfo psi = new ProcessStartInfo
                             {
                                 FileName = path,
-                                UseShellExecute = true
-                            });
+                                UseShellExecute = true,
+                                WindowStyle = ProcessWindowStyle.Minimized
+                            };
                             
-                            LogDebug("Spotify started from alternative path");
+                            Process.Start(psi);
+                            LogDebug("Spotify started from alternative path in minimized mode");
                             started = true;
                             break;
                         }
@@ -300,15 +301,18 @@ namespace SpotifyAdSkipper
                     
                     if (!started)
                     {
-                        // Last resort - try the shell command
+                        // Last resort - try the shell command with minimized settings
                         try 
                         {
-                            Process.Start(new ProcessStartInfo
+                            ProcessStartInfo psi = new ProcessStartInfo
                             {
                                 FileName = "spotify",
-                                UseShellExecute = true
-                            });
-                            LogDebug("Spotify started via shell command");
+                                UseShellExecute = true,
+                                WindowStyle = ProcessWindowStyle.Minimized
+                            };
+                            
+                            Process.Start(psi);
+                            LogDebug("Spotify started via shell command in minimized mode");
                             started = true;
                         }
                         catch (Exception ex)
@@ -337,6 +341,17 @@ namespace SpotifyAdSkipper
                         // SW_MINIMIZE = 6
                         ShowWindow(spotifyWindow, 6);
                         LogDebug("Minimized Spotify window");
+                    }
+                    
+                    // Also look for any window with "Spotify" in the title
+                    await Task.Delay(1000); // Short delay to allow window to appear
+                    foreach (var process in Process.GetProcessesByName(SpotifyProcessName))
+                    {
+                        if (process.MainWindowHandle != IntPtr.Zero)
+                        {
+                            ShowWindow(process.MainWindowHandle, 6); // SW_MINIMIZE = 6
+                            LogDebug($"Minimized Spotify window with handle {process.MainWindowHandle}");
+                        }
                     }
                 }
             }
