@@ -1,11 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk.Worker">
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <ImplicitUsings>disable</ImplicitUsings>
-    <UserSecretsId>dotnet-SpotifyAdSkipper-4f9b83bc-f31e-47b3-8ca4-16d5d4b98d89</UserSecretsId>
-    <OutputType>Exe</OutputType>
+    <ApplicationIcon>skipify.ico</ApplicationIcon>
+    <StartupObject>Skipify.Program</StartupObject>
+    <UserSecretsId>dotnet-Skipify-4f9b83bc-f31e-47b3-8ca4-16d5d4b98d89</UserSecretsId>
     <PublishSingleFile>true</PublishSingleFile>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <SelfContained>true</SelfContained>

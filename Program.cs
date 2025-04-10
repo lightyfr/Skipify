@@ -10,38 +10,75 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Win32;
 
-namespace SpotifyAdSkipper
+namespace Skipify
 {
     public class Program
     {
+        [DllImport("kernel32.dll")]
+        static extern IntPtr GetConsoleWindow();
+
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        const int SW_HIDE = 0;
+
         public static void Main(string[] args)
         {
             try
             {
+                // Hide console window
+                var handle = GetConsoleWindow();
+                ShowWindow(handle, SW_HIDE);
+
+                // Register in startup
+                RegisterInStartup();
+
                 // For debugging directly
                 if (args.Length > 0 && args[0] == "console")
                 {
+                    ShowWindow(handle, 1); // Show console in debug mode
                     Console.WriteLine("Running in console mode");
                     SpotifyMonitorService service = new SpotifyMonitorService(null);
                     service.StartConsoleMode().GetAwaiter().GetResult();
                     return;
                 }
 
-                // Run as a service
+                // Run as background process
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)
             {
-                File.WriteAllText("C:\\SpotifyAdSkipper_error.log", $"Startup error: {ex}");
+                File.WriteAllText("C:\\Skipify_error.log", $"Startup error: {ex}");
+            }
+        }
+
+        private static void RegisterInStartup()
+        {
+            try
+            {
+                // Get the path of the currently running executable
+                string exePath = Process.GetCurrentProcess().MainModule.FileName;
+                
+                // Open the registry key for startup programs
+                using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
+                {
+                    // Check if already registered
+                    if (key.GetValue("Skipify") == null)
+                    {
+                        // Add the application to startup
+                        key.SetValue("Skipify", $"\"{exePath}\"");
+                        File.AppendAllText("C:\\Skipify_debug.log", $"{DateTime.Now}: Added to startup: {exePath}\n");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllText("C:\\Skipify_error.log", $"{DateTime.Now}: Failed to register startup: {ex.Message}\n");
             }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .UseWindowsService(options =>
-                {
-                    options.ServiceName = "Spotify Ad Skipper";
-                })
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<SpotifyMonitorService>();
@@ -58,7 +95,7 @@ namespace SpotifyAdSkipper
         private string _previousTitle = string.Empty;
         private string _lastSongBeforeRestart = string.Empty;
         private DateTime _lastAdDetection = DateTime.MinValue;
-        private string _debugLogPath = "C:\\SpotifyAdSkipper_debug.log";
+        private string _debugLogPath = "C:\\Skipify_debug.log";
 
         // Win32 API imports
         [DllImport("user32.dll")]
@@ -101,7 +138,7 @@ namespace SpotifyAdSkipper
 
         public async Task StartConsoleMode()
         {
-            Console.WriteLine("Spotify Ad Skipper running in console mode");
+            Console.WriteLine("Skipify running in console mode");
             Console.WriteLine("Press Ctrl+C to exit");
             
             var tokenSource = new CancellationTokenSource();
@@ -117,7 +154,7 @@ namespace SpotifyAdSkipper
         {
             try
             {
-                LogDebug("SpotifyAdSkipper service started");
+                LogDebug("Skipify service started");
                 
                 while (!stoppingToken.IsCancellationRequested)
                 {
@@ -167,17 +204,32 @@ namespace SpotifyAdSkipper
                             }
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception ex) when (!(ex is TaskCanceledException))
                     {
                         LogDebug($"Error monitoring Spotify: {ex.Message}");
                     }
                     
-                    await Task.Delay(_checkIntervalMs, stoppingToken);
+                    try
+                    {
+                        await Task.Delay(_checkIntervalMs, stoppingToken);
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        LogDebug("Service stopping gracefully");
+                        break;
+                    }
                 }
+                
+                LogDebug("Skipify service stopped normally");
+            }
+            catch (TaskCanceledException)
+            {
+                LogDebug("Skipify service stopped gracefully");
             }
             catch (Exception ex)
             {
                 LogDebug($"Fatal error: {ex}");
+                throw; // Rethrow fatal errors that aren't cancellation
             }
         }
 

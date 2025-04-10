@@ -10,6 +10,36 @@ A lightweight Windows service that automatically detects and skips Spotify adver
 - No Spotify Premium account required
 - No Spotify API keys needed
 - Works with the desktop Spotify client
+- Smart ad detection using multiple methods
+- Intelligent track resumption after ad skipping
+- Hidden operation mode for minimal user interference
+- Automatic error recovery and logging
+
+## Technical Features
+
+### Smart Ad Detection
+- Pattern Analysis: Detects breaks in the standard "Artist - Song" format
+- Keyword Detection: Identifies explicit advertisement markers
+- Title Analysis: Monitors for suspicious window title changes
+- Cooldown System: Prevents excessive restarts with 30-second intervals
+
+### Intelligent Playback Management
+- Track Memory: Remembers the last playing song before ad interruption
+- Smart Resume: Automatically skips repeated tracks after restart
+- Media Key Integration: Uses system media keys for reliable playback control
+- Background Operation: Runs completely hidden from user view
+
+### Robust Error Handling
+- Multiple Spotify Path Detection: Supports various installation locations
+- Graceful Process Management: Ensures clean Spotify termination and restart
+- Debug Logging: Maintains detailed logs at `C:\Skipify_debug.log`
+- Auto-Recovery: Handles unexpected states and process failures
+
+### System Integration
+- Windows Service Integration: Runs as a native Windows service
+- Startup Registration: Automatically registers in Windows startup
+- Resource Efficient: Adaptive monitoring intervals
+- Silent Operation: Minimizes visual interference
 
 ## How It Works
 
@@ -34,66 +64,47 @@ The result is that ads are effectively skipped, and your music resumes with mini
 
 1. Clone this repository:
    ```
-   git clone https://github.com/yourusername/spotify-ad-skipper.git
-   cd spotify-ad-skipper
+   git clone https://github.com/lightyfr/skipify.git
+   cd skipify
    ```
 
 2. Build the project:
    ```
-   dotnet publish -c Release -r win-x64 --self-contained true -o ./publish
+   dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
    ```
 
-3. Install as a Windows service (run PowerShell as Administrator):
+3. Run EXE:
    ```powershell
-   cd ./publish
-   sc.exe create "SpotifyAdSkipper" binPath= "$(Get-Location)\SpotifyAdSkipper.exe" start= auto
-   sc.exe start "SpotifyAdSkipper"
+   cd .\bin\Release\net6.0\win-x64\publish\
+   .\Skipify.exe
    ```
 
 ### Option 2: Download Pre-built Release
 
 1. Download the latest release from the Releases page
 2. Extract the zip file
-3. Run PowerShell as Administrator and navigate to the extracted folder
-4. Install the service:
-   ```powershell
-   sc.exe create "SpotifyAdSkipper" binPath= "$(Get-Location)\SpotifyAdSkipper.exe" start= auto
-   sc.exe start "SpotifyAdSkipper"
-   ```
+3. Run the Exe
 
 ## Usage
 
-Once installed, the service runs automatically in the background. No additional configuration is required. The service:
+Once installed, the service runs automatically in the background, and should start on device startup. No additional configuration is required. The service:
 
 - Starts automatically when Windows boots
 - Monitors Spotify only when it's running
 - Uses minimal resources when Spotify is closed
-- Creates a debug log at `C:\SpotifyAdSkipper_debug.log`
+- Creates a debug log at `C:\Skipify_debug.log`
 
 ## Troubleshooting
 
 If you encounter issues:
 
-1. Check the debug log at `C:\SpotifyAdSkipper_debug.log`
-2. Check Windows Event Viewer > Application logs for "SpotifyAdSkipper" entries
+1. Check the debug log at `C:\Skipify_debug.log`
+2. Check Windows Event Viewer > Application logs for "Skipify" entries
 3. Common issues:
    - **Spotify not closing properly**: Try increasing the delay in the `RestartSpotify()` method
    - **Spotify path not found**: Update the `SpotifyExePath` constant in the code to match your installation
    - **Service crashes**: Check the log for detailed error messages
 
-### Restarting or Removing the Service
-
-To restart the service:
-```powershell
-sc.exe stop "SpotifyAdSkipper"
-sc.exe start "SpotifyAdSkipper"
-```
-
-To remove the service:
-```powershell
-sc.exe stop "SpotifyAdSkipper"
-sc.exe delete "SpotifyAdSkipper"
-```
 
 ## How Ad Detection Works
 
